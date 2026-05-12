@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  go-app:
+    build: .
+    container_name: golang-web
+    restart: always
+    ports:
+      - "80:8080" # Map port 80 di server ke port 8080 di container

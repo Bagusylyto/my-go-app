@@ -1,0 +1,62 @@
+name: CI/CD Golang App
+
+on:
+  push:
+    branches:
+      - main # Workflow akan berjalan setiap kali ada push ke branch main
+
+jobs:
+  # Job 1: Build dan Test
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.20"
+
+      - name: Build Application
+        run: go build -v ./...
+
+      # - name: Run Tests (Uncomment jika ada unit test)
+      #   run: go test -v ./...
+
+  # Job 2: Deploy ke Server
+  deploy:
+    needs: build # Job deploy akan jalan setelah job build sukses
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to VPS using SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          port: ${{ secrets.SERVER_PORT }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          # Jika memakai SSH Key, gunakan:
+          # key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            # Buat direktori project di server jika belum ada
+            mkdir -p /opt/my-go-app
+            cd /opt/my-go-app
+
+            # (Opsional) Jika belum pernah di-clone, gunakan git clone. 
+            # Di sini kita asumsikan server akan pull kode terbaru:
+            if [ ! -d ".git" ]; then
+              git clone https://github.com/USERNAME_KAMU/NAMA_REPO.git .
+            fi
+
+            # Tarik kode terbaru dari branch main
+            git pull origin main
+
+            # Rebuild dan jalankan ulang container dengan Docker Compose
+            docker-compose up -d --build
+
+            # Bersihkan image Docker yang tidak terpakai (dangling images)
+            docker image prune -f
