@@ -49,7 +49,7 @@ jobs:
             git pull origin main
 
             # Rebuild dan jalankan ulang container dengan Docker Compose
-            docker-compose up -d --build
+            docker compose up -d --build
 
             # Bersihkan image Docker yang tidak terpakai (dangling images)
             docker image prune -f
