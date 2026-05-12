@@ -42,6 +42,9 @@ jobs:
           # Jika memakai SSH Key, gunakan:
           # key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
+            # Masuk ke direktori aplikasi di server
+            cd ${{ secrets.SERVER_APP_DIR }}
+
             # Tarik kode terbaru dari branch main
             git pull origin main
 
