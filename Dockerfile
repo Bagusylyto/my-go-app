@@ -1,5 +1,5 @@
 # Stage 1: Build tahap kompilasi kode Golang
-FROM golang:1.20-alpine AS builder
+FROM golang:1.26.3-alpine AS builder
 
 WORKDIR /app
 COPY go.mod ./
