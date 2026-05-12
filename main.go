@@ -7,8 +7,8 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "Halo DevOps!")
-    fmt.Fprintf(w, "Ini adalah aplikasi Golang yang di-deploy otomatis.")
+    fmt.Fprintf(w, "Halo DevOps!\n")
+    fmt.Fprintf(w, "Ini adalah aplikasi Golang yang di-deploy otomatis.\n")
 }
 
 func main() {
