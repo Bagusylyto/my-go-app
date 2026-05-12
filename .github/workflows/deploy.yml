@@ -42,16 +42,6 @@ jobs:
           # Jika memakai SSH Key, gunakan:
           # key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            # Buat direktori project di server jika belum ada
-            mkdir -p /opt/my-go-app
-            cd /opt/my-go-app
-
-            # (Opsional) Jika belum pernah di-clone, gunakan git clone. 
-            # Di sini kita asumsikan server akan pull kode terbaru:
-            if [ ! -d ".git" ]; then
-              git clone https://github.com/Bagusylyto/my-go-app.git .
-            fi
-
             # Tarik kode terbaru dari branch main
             git pull origin main
 
