@@ -49,7 +49,7 @@ jobs:
             # (Opsional) Jika belum pernah di-clone, gunakan git clone. 
             # Di sini kita asumsikan server akan pull kode terbaru:
             if [ ! -d ".git" ]; then
-              git clone https://github.com/USERNAME_KAMU/NAMA_REPO.git .
+              git clone https://github.com/Bagusylyto/my-go-app.git .
             fi
 
             # Tarik kode terbaru dari branch main
